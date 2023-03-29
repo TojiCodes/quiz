@@ -3,21 +3,71 @@ var startBtnEl = document.querySelector("#start-btn");
 var timerEl = document.querySelector("#time-el");
 
 var interval;
-var time = 60;
+var score = 0;
+var time = 100;
 var questionIndex = 0;
 var lastQuestionCorrect = '';
 
 var questions = [
     {
-        questionText: "What is 9 x 9?",
-        questionChoices: ["18", "Fish", "81"],
+        questionText: "What is 1 x 9?",
+        questionChoices: ["10", "Fish", "9"],
         correctAnswer: 2
     },
+
     {
-        questionText: "What is 12 x 12?",
-        questionChoices: ["24", "144", "0", "Salmon"],
+        questionText: "What is 2 x 9?",
+        questionChoices: ["11", "18", "Chicken"],
         correctAnswer: 1
-    }
+    },
+
+    {
+        questionText: "What is 3 x 9?",
+        questionChoices: ["27", "12", "Dog"],
+        correctAnswer: 0
+    },
+
+    {
+        questionText: "What is 4 x 9?",
+        questionChoices: ["Cat", "36", "13"],
+        correctAnswer: 1
+    },
+
+    {
+        questionText: "What is 5 x 9?",
+        questionChoices: ["Pig", "14", "45"],
+        correctAnswer: 2
+    },
+
+    {
+        questionText: "What is 6 x 9?",
+        questionChoices: ["54", "Cow", "15"],
+        correctAnswer: 0
+    },
+
+    {
+        questionText: "What is 7 x 9?",
+        questionChoices: ["16", "63", "Horse"],
+        correctAnswer: 1
+    },
+
+    {
+        questionText: "What is 8 x 9?",
+        questionChoices: ["Sheep", "72", "17"],
+        correctAnswer: 1
+    },
+
+    {
+        questionText: "What is 9 x 9?",
+        questionChoices: ["81", "Goat", "18"],
+        correctAnswer: 0
+    },
+
+    {
+        questionText: "What is 10 x 9?",
+        questionChoices: ["18", "Bunny", "90"],
+        correctAnswer: 2
+    },
 ];
 
 function displayQuestion() {
@@ -33,29 +83,10 @@ function displayQuestion() {
     mainEl.appendChild(h1El);
     
     var btnDivEl = document.createElement("div");
+    btnDivEl.style.display = "flex";
+    btnDivEl.style.flexDirection = "column";
+    btnDivEl.style.alignItems = "center";
     mainEl.appendChild(btnDivEl);
-
-    
-    // btnDivEl.addEventListener("click", function(event) {
-    //     var target = event.target;
-        
-    //     if (target.getAttribute("class") !== 'btn') return;
-        
-    //     var clickedQuestionIndex = parseInt(target.getAttribute("data-index"));
-        
-    //     console.log(clickedQuestionIndex);
-    //     if (clickedQuestionIndex === questions[questionIndex].correctAnswer) {
-    //         lastQuestionCorrect = "Correct"
-    //     } else {
-    //         time = time - 10;
-    //         lastQuestionCorrect = "Incorrect"
-    //     }
-        
-    //     questionIndex++;
-        
-    //     displayQuestion();
-        
-    // });
 
     var pEl = document.createElement('p');
     pEl.textContent = lastQuestionCorrect;
@@ -73,6 +104,7 @@ function displayQuestion() {
             console.log(clickedQuestionIndex);
             if (clickedQuestionIndex === questions[questionIndex].correctAnswer) {
                 lastQuestionCorrect = "Correct"
+                score++;
             } else {
                 time = time - 10;
                 lastQuestionCorrect = "Incorrect"
@@ -111,8 +143,23 @@ startBtnEl.addEventListener("click", function (event) {
 
 });
 
+function createHighScorePage() {
+    mainEl.innerHTML = "";
+
+    var h1El = document.createElement("h1");
+    h1El.textContent = "High Scores";
+    mainEl.appendChild(h1El);
+
+    var pEl = document.createElement("p");
+    pEl.textContent = "Your score: " + score;
+    mainEl.appendChild(pEl);
+}
+
+
 
 
 function endgame() {
     clearInterval(interval);
+    createHighScorePage();
 };
+
