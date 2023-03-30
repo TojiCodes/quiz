@@ -3,12 +3,41 @@
 <head>
     <title>High Scores</title>
 </head>
+<link rel="stylesheet" href="./assets/HSstyle.css">
+
+<body class="img1">
+
+    
+    <main class="highscores-main">
+        <div class="highscores-container-div">
+            <div class="highscores-div">
+                <h1>Highscores</h1>
+            </div>
+            <table id="scores" class="hstable">
+                <tr class="row-scores" id="row-scores_">
+                    <th class="thfont">Initials</th>
+                    <th class="thfont">Scores</th>
+                </tr>
+                <br />
+                <tr class="row-scores" id="row-scores">
+                    <th id="nameTable"></th>
+                    <th id="scoreTable"></th>
+                </tr>
+            </table>
+            <!-- <div class="table-controls">
+                <a href="../../index.html"><button class="button-submit">Go Back</button></a>
+                <button class="button-submit" id="clear-storage">Clear Data</button>
+            </div> -->
+        </div>
+    </main>
+</body>
+<!-- <form>
 <div id="high-score-form">
-    <form>
+
 <label for="initials">Enter your initials:</label>
 <input type="text" id="initials" name="initials">
 <button type="submit">Submit</button>
-    </form>
 </div>
+</form> -->
 <script src="./assets/highscores.js"></script>
 </html>

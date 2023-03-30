@@ -1,78 +1,83 @@
 var mainEl = document.querySelector("main");
 var startBtnEl = document.querySelector("#start-btn");
 var timerEl = document.querySelector("#time-el");
+var formEl = document.querySelector(".form");
+
 
 var interval;
 var score = 0;
 var time = 100;
 var questionIndex = 0;
 var lastQuestionCorrect = '';
+var highScoresArr = []
 
 var questions = [
     {
-        questionText: "What is 1 x 9?",
-        questionChoices: ["10", "Fish", "9"],
-        correctAnswer: 2
-    },
-
-    {
-        questionText: "What is 2 x 9?",
-        questionChoices: ["11", "18", "Chicken"],
+        questionText: "What type of Pokemon is Charizard?",
+        questionChoices: ["Dragon", "Fire", "Water"],
         correctAnswer: 1
     },
 
+    
     {
-        questionText: "What is 3 x 9?",
-        questionChoices: ["27", "12", "Dog"],
+        questionText: "What type of Pokemon is Blastoise?",
+        questionChoices: ["Water", "Turtle", "Grass"],
         correctAnswer: 0
     },
-
+    
     {
-        questionText: "What is 4 x 9?",
-        questionChoices: ["Cat", "36", "13"],
+        questionText: "What type of Pokemon is Venusaur?",
+        questionChoices: ["Water", "Grass", "Leaf"],
+        correctAnswer: 1
+    },
+    
+    {
+        questionText: "What type of Pokemon is Pikachu?",
+        questionChoices: ["Normal", "Lightning", "Flying"],
         correctAnswer: 1
     },
 
     {
-        questionText: "What is 5 x 9?",
-        questionChoices: ["Pig", "14", "45"],
-        correctAnswer: 2
-    },
-
-    {
-        questionText: "What is 6 x 9?",
-        questionChoices: ["54", "Cow", "15"],
-        correctAnswer: 0
-    },
-
-    {
-        questionText: "What is 7 x 9?",
-        questionChoices: ["16", "63", "Horse"],
-        correctAnswer: 1
-    },
-
-    {
-        questionText: "What is 8 x 9?",
-        questionChoices: ["Sheep", "72", "17"],
-        correctAnswer: 1
-    },
-
-    {
-        questionText: "What is 9 x 9?",
-        questionChoices: ["81", "Goat", "18"],
-        correctAnswer: 0
-    },
-
-    {
-        questionText: "What is 10 x 9?",
-        questionChoices: ["18", "Bunny", "90"],
+        questionText: "How many Pokemon total are in Generation 1?",
+        questionChoices: ["365", "12", "151"],
         correctAnswer: 2
     },
 ];
 
+//     {
+//         questionText: "What is 6 x 9?",
+//         questionChoices: ["54", "Cow", "15"],
+//         correctAnswer: 0
+//     },
+
+//     {
+//         questionText: "What is 7 x 9?",
+//         questionChoices: ["16", "63", "Horse"],
+//         correctAnswer: 1
+//     },
+
+//     {
+//         questionText: "What is 8 x 9?",
+//         questionChoices: ["Sheep", "72", "17"],
+//         correctAnswer: 1
+//     },
+
+//     {
+//         questionText: "What is 9 x 9?",
+//         questionChoices: ["81", "Goat", "18"],
+//         correctAnswer: 0
+//     },
+
+//     {
+//         questionText: "What is 10 x 9?",
+//         questionChoices: ["18", "Bunny", "90"],
+//         correctAnswer: 2
+//     },
+// ];
+
 function displayQuestion() {
     mainEl.innerHTML = "";
-
+    
     if (questionIndex >= questions.length) {
         endgame();
         return;
@@ -83,16 +88,20 @@ function displayQuestion() {
     mainEl.appendChild(h1El);
     
     var btnDivEl = document.createElement("div");
-    btnDivEl.style.display = "flex";
-    btnDivEl.style.flexDirection = "column";
-    btnDivEl.style.alignItems = "center";
     mainEl.appendChild(btnDivEl);
 
     var pEl = document.createElement('p');
     pEl.textContent = lastQuestionCorrect;
     mainEl.appendChild(pEl);
     
+    var buttonsContainer = document.createElement('div');
+    buttonsContainer.addClass = 'buttonsContainer'
+    buttonsContainer.style.display = "flex"
+    buttonsContainer.style.justifyContent = "center"
+    mainEl.appendChild(buttonsContainer);
+
     for (var i = 0; i < questions[questionIndex].questionChoices.length; i++) {
+
         var buttonEl = document.createElement('button');
         buttonEl.textContent = questions[questionIndex].questionChoices[i]; 
         buttonEl.setAttribute("class", "btn");
@@ -115,7 +124,7 @@ function displayQuestion() {
             displayQuestion();
 
         });
-        mainEl.appendChild(buttonEl);
+        buttonsContainer.appendChild(buttonEl)
     }
     
     
@@ -156,10 +165,58 @@ function createHighScorePage() {
 }
 
 
-
-
 function endgame() {
+    //stop timer for quiz
     clearInterval(interval);
-    createHighScorePage();
+
+    //dunamically create form
+    var form = document.createElement('form');
+
+    var label = document.createElement('label');
+
+    label.textContent = "Enter your initials for highscores:"
+    label.style.color = "white";
+
+    var input = document.createElement('input');
+    input.setAttribute("id", 'initials')
+
+    var button = document.createElement('button');
+    button.textContent = "Submit"
+
+    form.appendChild(label)
+    form.appendChild(input)
+    form.appendChild(button)
+
+    //append form to html because html innerHTML was cleared in display function
+    mainEl.appendChild(form);
+
+    
+    button.addEventListener("click", function() {
+        //save highscores to local storage
+        var initials = input.value
+    
+        //GET ANY EXISTING HIGHSCORES
+        var storedHighScores = JSON.parse(localStorage.getItem("highScores"))
+        // if highscores exist in local storage update highscores arr
+        if(storedHighScores !== null && storedHighScores.length > 0) {
+            highScoresArr = storedHighScores
+        }
+    
+        //set the current score in local storage
+        var scoresObj =  {
+            name: initials,
+            score: time
+        }
+        //add current object to highscores array
+        highScoresArr.push(scoresObj)
+    
+        localStorage.setItem('highScores', JSON.stringify(highScoresArr))
+        event.preventDefault()
+        location.href = "./highscores.html"
+    })
+    
+
+    //createHighScorePage();
 };
+
 

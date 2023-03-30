@@ -39,10 +39,27 @@ p {
     text-align: center;
 }
 
+
+/* Put Pokemon as Background image */
 .img1 {
     background-image: url("../assets/images/pokemon-nature-pikachu-charmander-wallpaper-4664237548c040be06a0d9e164fe6dd4.jpg");
     background-size: 100%;
     }
+
+
+/* Centered Table */
+.hstable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    color: white;
+}
+
+/* Put underline on "Initials" & "Score" */
+.thfont {
+    text-decoration: underline;
+}
 
 /* main {
     display: flex;
